@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Selux Innovation – AI & Machine Learning</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --blue-deep: #020c1b;
+      --blue-mid: #0a1f3f;
+      --blue-glow: #00aaff;
+      --blue-bright: #38d1ff;
+      --cyan: #00e5ff;
+      --white: #e8f4ff;
+      --grey: #7ea8c9;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--blue-deep);
+      color: var(--white);
+      font-family: 'Exo 2', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── ANIMATED BACKGROUND ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(0,170,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(0,229,255,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 80%, rgba(0,100,200,0.07) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── GRID OVERLAY ─── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,170,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,170,255,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+
+    /* ─── COMING SOON BANNER ─── */
+    .coming-soon-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: linear-gradient(90deg, rgba(0,170,255,0.15), rgba(0,229,255,0.1), rgba(0,170,255,0.15));
+      border-bottom: 1px solid rgba(0,229,255,0.4);
+      padding: 0.55rem 1rem;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .coming-soon-banner p {
+      font-family: "Exo 2", sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin: 0;
+    }
+
+    .coming-soon-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      display: inline-block;
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* Push everything down to account for both banner and nav */
+    nav { top: 38px; }
+    .hero { padding-top: 10rem; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(2, 12, 27, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,170,255,0.15);
+    }
+
+    .nav-logo {
+      height: 52px;
+      width: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      filter: drop-shadow(0 0 8px rgba(0,229,255,0.7));
+      mix-blend-mode: screen;
+      transition: all 0.3s;
+      box-shadow: 0 0 15px rgba(0,170,255,0.4);
+    }
+    .nav-logo:hover {
+      box-shadow: 0 0 25px rgba(0,229,255,0.7);
+      filter: drop-shadow(0 0 15px rgba(0,229,255,1));
+    }
+    .logo-link { text-decoration: none; }
+    .logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--blue-glow), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--cyan); }
+
+    .nav-cta {
+      padding: 0.5rem 1.4rem;
+      border: 1px solid var(--blue-glow);
+      color: var(--blue-glow) !important;
+      border-radius: 4px;
+      transition: all 0.3s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--blue-glow) !important;
+      color: var(--blue-deep) !important;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 5% 4rem;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .hero-orb {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      right: -100px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,170,255,0.12) 0%, transparent 70%);
+      border: 1px solid rgba(0,170,255,0.1);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    .hero-orb::before {
+      content: '';
+      position: absolute;
+      inset: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,229,255,0.08);
+      animation: spin 20s linear infinite;
+    }
+
+    .hero-orb::after {
+      content: '';
+      position: absolute;
+      inset: 80px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,170,255,0.06);
+      animation: spin 30s linear infinite reverse;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: translateY(-50%) scale(1); }
+      50% { opacity: 1; transform: translateY(-50%) scale(1.05); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-content {
+      max-width: 700px;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid rgba(0,229,255,0.3);
+      padding: 0.3rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+
+    h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      animation: fadeUp 1s 0.4s ease both;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, var(--blue-glow), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--grey);
+      line-height: 1.7;
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 1s 0.8s ease both;
+    }
+
+    .btn-primary {
+      padding: 0.9rem 2rem;
+      background: linear-gradient(135deg, var(--blue-glow), var(--cyan));
+      color: var(--blue-deep);
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 0 30px rgba(0,170,255,0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(0,170,255,0.5);
+    }
+
+    .btn-secondary {
+      padding: 0.9rem 2rem;
+      background: transparent;
+      color: var(--blue-glow);
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1px solid var(--blue-glow);
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0,170,255,0.1);
+      transform: translateY(-2px);
+    }
+
+    /* ─── STATS ─── */
+    .stats {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      padding: 3rem 5%;
+      border-top: 1px solid rgba(0,170,255,0.1);
+      border-bottom: 1px solid rgba(0,170,255,0.1);
+      background: rgba(0,170,255,0.03);
+    }
+
+    .stat { text-align: center; }
+
+    .stat-num {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--blue-glow), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-top: 0.3rem;
+    }
+
+    /* ─── WHAT YOU LEARN ─── */
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 5%;
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, var(--blue-glow), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-desc {
+      color: var(--grey);
+      max-width: 550px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: rgba(10, 31, 63, 0.6);
+      border: 1px solid rgba(0,170,255,0.12);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue-glow), var(--cyan));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover {
+      border-color: rgba(0,170,255,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(0,170,255,0.08);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 0.7rem;
+      color: var(--white);
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+
+    /* ─── ABOUT ─── */
+    .about {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 5%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      background: rgba(0,170,255,0.02);
+      border-top: 1px solid rgba(0,170,255,0.08);
+    }
+
+    .about-visual {
+      position: relative;
+      height: 400px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(0,170,255,0.2);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(0,170,255,0.15) 0%, transparent 70%),
+        linear-gradient(135deg, var(--blue-mid), var(--blue-deep));
+    }
+
+    .about-visual-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .about-visual-inner svg {
+      width: 65%;
+      height: 65%;
+      max-width: 260px;
+      max-height: 260px;
+    }
+
+    /* ─── CTA SECTION ─── */
+    .cta-section {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 6rem 5%;
+      background: linear-gradient(135deg, rgba(0,100,200,0.08), rgba(0,229,255,0.04));
+      border-top: 1px solid rgba(0,170,255,0.1);
+    }
+
+    .cta-section h2 {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      color: var(--grey);
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem 5%;
+      border-top: 1px solid rgba(0,170,255,0.1);
+      color: var(--grey);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    footer a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .about { grid-template-columns: 1fr; }
+      .about-visual { height: 250px; }
+      .hero-orb { width: 300px; height: 300px; right: -150px; }
+      .stats { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- COMING SOON BANNER -->
+  <div class="coming-soon-banner">
+    <span class="coming-soon-dot"></span>
+    <p>🚀 &nbsp; Selux Innovation is coming soon — something big is being built</p>
+    <span class="coming-soon-dot"></span>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo-link"><img src="data:image/png;base64,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" class="nav-logo" alt="Selux Logo"></a>
+    <ul class="nav-links">
+      <li><a href="#learn">Learn</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact" class="nav-cta">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-orb"></div>
+    <div class="hero-content">
+      <div class="hero-tag">The Future Starts Here</div>
+      <h1>Artificial<br><span>Intelligence</span><br>&amp; Machine Learning</h1>
+      <p class="hero-sub">Selux Innovation equips you with the skills, knowledge, and tools to become a leader in the AI revolution. Learn from the ground up — no experience required.</p>
+      <div class="hero-btns">
+        <a href="#learn" class="btn-primary">Start Learning</a>
+        <a href="#about" class="btn-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat reveal">
+      <div class="stat-num">6+</div>
+      <div class="stat-label">Core Subjects</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Online Access</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">AI</div>
+      <div class="stat-label">Powered Learning</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Possibilities</div>
+    </div>
+  </div>
+
+  <!-- WHAT YOU LEARN -->
+  <section class="section" id="learn">
+    <div class="section-tag reveal">Curriculum</div>
+    <h2 class="section-title reveal">What You Will <span>Learn</span></h2>
+    <p class="section-desc reveal">A complete journey from AI foundations to real-world innovation. Every module is designed to build practical, career-ready skills.</p>
+    <div class="cards-grid">
+      <div class="card reveal">
+        <div class="card-icon">🤖</div>
+        <div class="card-title">AI & Machine Learning</div>
+        <div class="card-desc">Understand how artificial intelligence works, including neural networks, deep learning, and real-world applications.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Data Collection</div>
+        <div class="card-desc">Learn how to gather, clean, and prepare high-quality datasets that power intelligent systems.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">⚙️</div>
+        <div class="card-title">Algorithms</div>
+        <div class="card-desc">Master the logic and mathematics behind the algorithms that make machines learn and make decisions.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🔧</div>
+        <div class="card-title">Machine Design</div>
+        <div class="card-desc">Design and engineer systems that combine hardware and software for intelligent automation.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🖥️</div>
+        <div class="card-title">System Design</div>
+        <div class="card-desc">Build scalable, robust AI architectures that work in production environments.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">💬</div>
+        <div class="card-title">AI Chatbot Innovation</div>
+        <div class="card-desc">Create your own intelligent chatbots using large language models and modern AI APIs.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-visual reveal">
+      <div class="about-visual-inner">
+          <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="90" cy="90" r="80" stroke="rgba(0,229,255,0.2)" stroke-width="1" stroke-dasharray="8 4"/>
+            <circle cx="90" cy="90" r="60" stroke="rgba(0,170,255,0.3)" stroke-width="1"/>
+            <circle cx="90" cy="90" r="40" stroke="rgba(0,229,255,0.4)" stroke-width="1" stroke-dasharray="4 4"/>
+            <circle cx="90" cy="90" r="22" fill="rgba(0,170,255,0.1)" stroke="rgba(0,229,255,0.6)" stroke-width="1.5"/>
+            <text x="90" y="99" text-anchor="middle" font-family="Orbitron, monospace" font-size="28" font-weight="900" fill="#00e5ff">S</text>
+            <circle cx="90" cy="10" r="3" fill="#00e5ff" opacity="0.8"/>
+            <circle cx="90" cy="170" r="3" fill="#00e5ff" opacity="0.8"/>
+            <circle cx="10" cy="90" r="3" fill="#00aaff" opacity="0.6"/>
+            <circle cx="170" cy="90" r="3" fill="#00aaff" opacity="0.6"/>
+            <circle cx="33" cy="33" r="2" fill="#00e5ff" opacity="0.5"/>
+            <circle cx="147" cy="147" r="2" fill="#00e5ff" opacity="0.5"/>
+            <circle cx="147" cy="33" r="2" fill="#00e5ff" opacity="0.5"/>
+            <circle cx="33" cy="147" r="2" fill="#00e5ff" opacity="0.5"/>
+            <line x1="90" y1="68" x2="90" y2="10" stroke="rgba(0,229,255,0.2)" stroke-width="1"/>
+            <line x1="90" y1="112" x2="90" y2="170" stroke="rgba(0,229,255,0.2)" stroke-width="1"/>
+            <line x1="68" y1="90" x2="10" y2="90" stroke="rgba(0,170,255,0.15)" stroke-width="1"/>
+            <line x1="112" y1="90" x2="170" y2="90" stroke="rgba(0,170,255,0.15)" stroke-width="1"/>
+          </svg>
+        </div>
+    </div>
+    <div>
+      <div class="section-tag reveal">Who We Are</div>
+      <h2 class="section-title reveal">Built by <span>Innovators</span>,<br>for Future Innovators</h2>
+      <p class="section-desc reveal">Selux Innovation was founded with one mission — to make world-class AI education accessible to everyone. Whether you're a student, a professional, or just curious about the future, we have a path for you.</p>
+      <p class="section-desc reveal" style="margin-top: -1rem;">We believe the next generation of AI engineers, robotics pioneers, and machine learning experts are out there right now. We're here to equip them.</p>
+      <a href="#contact" class="btn-primary reveal" style="display:inline-block; margin-top:1rem;">Join the Movement</a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="section-tag reveal">Get Started</div>
+    <h2 class="reveal">Ready to Shape the <span style="background: linear-gradient(135deg,#00aaff,#00e5ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Future?</span></h2>
+    <p class="reveal">Visit our website and begin your journey into Artificial Intelligence and Machine Learning today.</p>
+    <a href="https://www.seluxinnovation.com" class="btn-primary reveal" target="_blank">Visit Selux Innovation</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <a href="https://www.seluxinnovation.com">Selux Innovation</a> — Artificial Intelligence &amp; Machine Learning</p>
+  </footer>
+
+  <!-- SCROLL REVEAL SCRIPT -->
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
