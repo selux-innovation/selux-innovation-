@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Selux Innovation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bd:#020c1b;--bm:#0a1f3f;--bg:#00aaff;--cy:#00e5ff;--wh:#e8f4ff;--gr:#7ea8c9;--ok:#00ff88;--er:#ff4466;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bd);color:var(--wh);font-family:"Exo 2",sans-serif;overflow-x:hidden;}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 20% 50%,rgba(0,170,255,0.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(0,229,255,0.06) 0%,transparent 50%);}
+    body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(0,170,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,170,255,0.04) 1px,transparent 1px);background-size:50px 50px;}
+    /* BANNER */
+    .banner{position:fixed;top:0;left:0;right:0;z-index:300;background:linear-gradient(90deg,rgba(0,170,255,0.15),rgba(0,229,255,0.1),rgba(0,170,255,0.15));border-bottom:1px solid rgba(0,229,255,0.4);padding:0.42rem 1rem;text-align:center;display:flex;align-items:center;justify-content:center;gap:0.8rem;}
+    .banner p{font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--cy);margin:0;}
+    .bd{width:7px;height:7px;border-radius:50%;background:var(--cy);animation:blink 1.5s ease-in-out infinite;}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+    /* NAV */
+    nav{position:fixed;top:34px;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0.85rem 5%;background:rgba(2,12,27,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,170,255,0.15);}
+    .nlogo{height:46px;width:46px;border-radius:50%;object-fit:cover;filter:drop-shadow(0 0 8px rgba(0,229,255,0.7));transition:all 0.3s;cursor:pointer;}
+    .nl{display:flex;gap:1.4rem;list-style:none;align-items:center;}
+    .nl a{color:var(--gr);text-decoration:none;font-size:0.76rem;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;cursor:pointer;}
+    .nl a:hover,.nl a.act{color:var(--cy);}
+    .ncta{padding:0.38rem 1rem;border:1px solid var(--bg)!important;color:var(--bg)!important;border-radius:4px;transition:all 0.3s!important;}
+    .ncta:hover{background:var(--bg)!important;color:var(--bd)!important;}
+    .ham{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+    .ham span{width:24px;height:2px;background:var(--cy);border-radius:2px;}
+    /* PAGES */
+    .pg{display:none;min-height:100vh;padding-top:100px;position:relative;z-index:1;}
+    .pg.act{display:block;}
+    /* HERO */
+    .hero{padding:4rem 5% 3rem;display:flex;align-items:center;min-height:88vh;position:relative;overflow:hidden;}
+    .orb{position:absolute;width:480px;height:480px;right:-80px;top:50%;transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle,rgba(0,170,255,0.12) 0%,transparent 70%);border:1px solid rgba(0,170,255,0.1);animation:pulse 4s ease-in-out infinite;}
+    .orb::before{content:"";position:absolute;inset:40px;border-radius:50%;border:1px solid rgba(0,229,255,0.08);animation:spin 20s linear infinite;}
+    .orb::after{content:"";position:absolute;inset:80px;border-radius:50%;border:1px solid rgba(0,170,255,0.06);animation:spin 30s linear infinite reverse;}
+    @keyframes pulse{0%,100%{opacity:0.6;transform:translateY(-50%) scale(1)}50%{opacity:1;transform:translateY(-50%) scale(1.05)}}
+    @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    .hc{max-width:660px;animation:fu 1s ease forwards;}
+    @keyframes fu{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+    .htag{display:inline-block;font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--cy);border:1px solid rgba(0,229,255,0.3);padding:0.28rem 0.9rem;border-radius:2px;margin-bottom:1.4rem;}
+    h1{font-family:"Orbitron",monospace;font-size:clamp(2.2rem,5.5vw,4rem);font-weight:900;line-height:1.1;margin-bottom:0.9rem;}
+    h1 span{background:linear-gradient(135deg,var(--bg),var(--cy));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .hsub{font-size:0.92rem;color:var(--gr);line-height:1.7;max-width:500px;margin-bottom:2.2rem;}
+    .hbtns{display:flex;gap:1rem;flex-wrap:wrap;}
+    .bp{padding:0.78rem 1.6rem;background:linear-gradient(135deg,var(--bg),var(--cy));color:var(--bd);font-family:"Orbitron",monospace;font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;transition:all 0.3s;box-shadow:0 0 25px rgba(0,170,255,0.3);display:inline-block;text-decoration:none;}
+    .bp:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(0,170,255,0.5);}
+    .bs{padding:0.78rem 1.6rem;background:transparent;color:var(--bg);font-family:"Orbitron",monospace;font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--bg);border-radius:4px;cursor:pointer;transition:all 0.3s;display:inline-block;text-decoration:none;}
+    .bs:hover{background:rgba(0,170,255,0.1);transform:translateY(-2px);}
+    /* STATS */
+    .stats{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;padding:2.5rem 5%;border-top:1px solid rgba(0,170,255,0.1);border-bottom:1px solid rgba(0,170,255,0.1);background:rgba(0,170,255,0.03);position:relative;z-index:1;}
+    .stn{text-align:center;}
+    .snum{font-family:"Orbitron",monospace;font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,var(--bg),var(--cy));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .slbl{font-size:0.66rem;letter-spacing:2px;text-transform:uppercase;color:var(--gr);margin-top:0.3rem;}
+    /* SECTIONS */
+    .sec{position:relative;z-index:1;padding:4.5rem 5%;}
+    .stag{font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--cy);margin-bottom:0.7rem;}
+    .sti{font-family:"Orbitron",monospace;font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:700;margin-bottom:0.9rem;}
+    .sti span{background:linear-gradient(135deg,var(--bg),var(--cy));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .sd{color:var(--gr);max-width:500px;line-height:1.7;margin-bottom:2.2rem;font-size:0.88rem;}
+    /* CARDS */
+    .cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.4rem;}
+    .card{background:rgba(10,31,63,0.6);border:1px solid rgba(0,170,255,0.12);border-radius:8px;padding:1.7rem;transition:all 0.3s;position:relative;overflow:hidden;}
+    .card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--bg),var(--cy));opacity:0;transition:opacity 0.3s;}
+    .card:hover{border-color:rgba(0,170,255,0.3);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.3);}
+    .card:hover::before{opacity:1;}
+    .cico{font-size:1.8rem;margin-bottom:0.7rem;}
+    .ctit{font-family:"Orbitron",monospace;font-size:0.82rem;font-weight:700;letter-spacing:1px;margin-bottom:0.55rem;}
+    .cdsc{font-size:0.82rem;color:var(--gr);line-height:1.6;}
+    /* COURSES */
+    .ccg{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.8rem;}
+    .cc{background:rgba(10,31,63,0.7);border:1px solid rgba(0,170,255,0.15);border-radius:10px;overflow:hidden;transition:all 0.3s;}
+    .cc:hover{transform:translateY(-5px);border-color:rgba(0,229,255,0.4);box-shadow:0 20px 50px rgba(0,0,0,0.4);}
+    .cch{padding:1.8rem;background:linear-gradient(135deg,rgba(0,170,255,0.1),rgba(0,229,255,0.05));}
+    .cclv{display:inline-block;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;padding:0.18rem 0.65rem;border-radius:20px;border:1px solid rgba(0,229,255,0.4);color:var(--cy);margin-bottom:0.7rem;}
+    .cct{font-family:"Orbitron",monospace;font-size:0.92rem;font-weight:700;margin-bottom:0.45rem;}
+    .ccd{font-size:0.8rem;color:var(--gr);line-height:1.6;}
+    .ccb{padding:1.3rem 1.8rem;}
+    .ccl{list-style:none;margin-bottom:1.2rem;}
+    .ccl li{font-size:0.78rem;color:var(--gr);padding:0.28rem 0;border-bottom:1px solid rgba(0,170,255,0.07);display:flex;align-items:center;gap:0.5rem;}
+    .ccl li::before{content:"→";color:var(--cy);font-size:0.7rem;}
+    .ccbtn{width:100%;padding:0.62rem;background:transparent;border:1px solid var(--bg);color:var(--bg);font-family:"Orbitron",monospace;font-size:0.66rem;letter-spacing:2px;text-transform:uppercase;border-radius:4px;cursor:pointer;transition:all 0.3s;}
+    .ccbtn:hover{background:var(--bg);color:var(--bd);}
+    /* BLOG */
+    .bcg{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.8rem;}
+    .bc{background:rgba(10,31,63,0.6);border:1px solid rgba(0,170,255,0.12);border-radius:8px;overflow:hidden;transition:all 0.3s;cursor:pointer;}
+    .bc:hover{transform:translateY(-4px);border-color:rgba(0,229,255,0.3);}
+    .bi{height:145px;background:linear-gradient(135deg,rgba(0,170,255,0.15),rgba(0,229,255,0.05));display:flex;align-items:center;justify-content:center;font-size:2.8rem;}
+    .bb{padding:1.3rem;}
+    .bt2{font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--cy);margin-bottom:0.5rem;display:block;}
+    .bti{font-family:"Orbitron",monospace;font-size:0.85rem;font-weight:700;margin-bottom:0.55rem;line-height:1.4;}
+    .bex{font-size:0.78rem;color:var(--gr);line-height:1.6;margin-bottom:0.8rem;}
+    .bm{font-size:0.68rem;color:rgba(126,168,201,0.6);letter-spacing:1px;}
+    /* CONTACT */
+    .contg{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start;}
+    .ci{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.8rem;}
+    .cion{width:42px;height:42px;border:1px solid rgba(0,229,255,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+    .clbl{font-size:0.66rem;letter-spacing:2px;text-transform:uppercase;color:var(--cy);margin-bottom:0.22rem;}
+    .cval{font-size:0.86rem;color:var(--gr);}
+    /* FORM */
+    .fb{background:rgba(10,31,63,0.7);border:1px solid rgba(0,170,255,0.15);border-radius:10px;padding:2.2rem;}
+    .fti{font-family:"Orbitron",monospace;font-size:1rem;font-weight:700;margin-bottom:0.4rem;}
+    .fsu{font-size:0.8rem;color:var(--gr);margin-bottom:1.5rem;line-height:1.6;}
+    .fg{margin-bottom:1rem;}
+    .fg label{display:block;font-size:0.66rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gr);margin-bottom:0.4rem;}
+    .fg input,.fg textarea,.fg select{width:100%;padding:0.72rem 0.88rem;background:rgba(2,12,27,0.8);border:1px solid rgba(0,170,255,0.2);border-radius:4px;color:var(--wh);font-family:"Exo 2",sans-serif;font-size:0.86rem;transition:all 0.3s;outline:none;}
+    .fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--cy);box-shadow:0 0 12px rgba(0,229,255,0.1);}
+    .fg textarea{resize:vertical;min-height:110px;}
+    .fg select option{background:var(--bm);}
+    .fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .fsb{width:100%;padding:0.82rem;background:linear-gradient(135deg,var(--bg),var(--cy));color:var(--bd);font-family:"Orbitron",monospace;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;transition:all 0.3s;margin-top:0.4rem;}
+    .fsb:hover{transform:translateY(-2px);box-shadow:0 0 25px rgba(0,170,255,0.4);}
+    .fln{text-align:center;font-size:0.8rem;color:var(--gr);margin-top:0.9rem;}
+    .fln a{color:var(--cy);text-decoration:none;cursor:pointer;}
+    .al{padding:0.72rem 0.88rem;border-radius:4px;font-size:0.8rem;margin-bottom:0.9rem;display:none;}
+    .al.ok{background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);color:var(--ok);display:block;}
+    .al.err{background:rgba(255,68,102,0.1);border:1px solid rgba(255,68,102,0.3);color:var(--er);display:block;}
+    /* AUTH */
+    .apg{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:5rem 5% 3rem;}
+    .abx{width:100%;max-width:440px;}
+    .alo{text-align:center;margin-bottom:1.8rem;}
+    .ali{height:56px;width:56px;border-radius:50%;filter:drop-shadow(0 0 12px rgba(0,229,255,0.8));}
+    .alb{font-family:"Orbitron",monospace;font-size:1.1rem;font-weight:900;margin-top:0.7rem;background:linear-gradient(135deg,var(--bg),var(--cy));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    /* ABOUT */
+    .ag{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+    .av{height:360px;border-radius:8px;border:1px solid rgba(0,170,255,0.2);background:radial-gradient(circle at 50% 50%,rgba(0,170,255,0.15) 0%,transparent 70%),linear-gradient(135deg,var(--bm),var(--bd));display:flex;align-items:center;justify-content:center;animation:glow 3s ease-in-out infinite;}
+    @keyframes glow{0%,100%{opacity:0.85}50%{opacity:1}}
+    .av svg{width:62%;height:62%;max-width:230px;max-height:230px;}
+    /* NEWSLETTER */
+    .nl2{background:linear-gradient(135deg,rgba(0,100,200,0.08),rgba(0,229,255,0.04));border:1px solid rgba(0,170,255,0.1);border-radius:10px;padding:2.8rem;text-align:center;margin-top:3rem;}
+    .nl2 h3{font-family:"Orbitron",monospace;font-size:1.25rem;margin-bottom:0.7rem;}
+    .nl2 p{color:var(--gr);margin-bottom:1.4rem;font-size:0.88rem;}
+    .nlf{display:flex;gap:1rem;max-width:440px;margin:0 auto;}
+    .nlf input{flex:1;padding:0.75rem 0.9rem;background:rgba(2,12,27,0.8);border:1px solid rgba(0,170,255,0.2);border-radius:4px;color:var(--wh);font-family:"Exo 2",sans-serif;font-size:0.86rem;outline:none;transition:border 0.3s;}
+    .nlf input:focus{border-color:var(--cy);}
+    .nlf button{padding:0.75rem 1.3rem;background:linear-gradient(135deg,var(--bg),var(--cy));color:var(--bd);font-family:"Orbitron",monospace;font-size:0.66rem;font-weight:700;letter-spacing:1.5px;border:none;border-radius:4px;cursor:pointer;white-space:nowrap;transition:all 0.3s;}
+    .nlf button:hover{box-shadow:0 0 20px rgba(0,170,255,0.4);}
+    /* CTA */
+    .cta{position:relative;z-index:1;text-align:center;padding:4.5rem 5%;background:linear-gradient(135deg,rgba(0,100,200,0.08),rgba(0,229,255,0.04));border-top:1px solid rgba(0,170,255,0.1);}
+    .cta h2{font-family:"Orbitron",monospace;font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:700;margin-bottom:0.9rem;}
+    .cta p{color:var(--gr);max-width:460px;margin:0 auto 2.2rem;line-height:1.7;font-size:0.9rem;}
+    /* FOOTER */
+    footer{position:relative;z-index:1;padding:3rem 5% 1.8rem;border-top:1px solid rgba(0,170,255,0.1);background:rgba(2,12,27,0.5);}
+    .fg2{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem;}
+    .fb2{font-family:"Orbitron",monospace;font-size:1.1rem;font-weight:900;background:linear-gradient(90deg,var(--bg),var(--cy));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.7rem;}
+    .fd{font-size:0.82rem;color:var(--gr);line-height:1.7;max-width:270px;}
+    .fh{font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--cy);margin-bottom:0.9rem;}
+    .fls{list-style:none;}
+    .fls li{margin-bottom:0.5rem;}
+    .fls a{font-size:0.82rem;color:var(--gr);text-decoration:none;cursor:pointer;transition:color 0.3s;}
+    .fls a:hover{color:var(--cy);}
+    .fbt{text-align:center;font-size:0.74rem;color:rgba(126,168,201,0.5);padding-top:1.5rem;border-top:1px solid rgba(0,170,255,0.08);letter-spacing:1px;}
+    /* REVEAL */
+    .rv{opacity:0;transform:translateY(25px);transition:all 0.7s ease;}
+    .rv.vis{opacity:1;transform:translateY(0);}
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .nl{display:none;flex-direction:column;position:fixed;top:88px;left:0;right:0;background:rgba(2,12,27,0.98);padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(0,170,255,0.15);z-index:190;}
+      .nl.open{display:flex;}
+      .ham{display:flex;}
+      .contg,.ag,.fg2{grid-template-columns:1fr;gap:2rem;}
+      .fr{grid-template-columns:1fr;}
+      .nlf{flex-direction:column;}
+      .orb{width:250px;height:250px;right:-120px;}
+      .av{height:230px;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="banner">
+  <span class="bd"></span>
+  <p>🚀 &nbsp; Selux Innovation is coming soon — something big is being built</p>
+  <span class="bd"></span>
+</div>
+
+<nav>
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoEAAAKOCAYAAADZBcNtAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAAR3UlEQVR4nO3dUVobuRKAUTHf7CL7Xxrr4D5kckM6xnS7pVKVdM4KwO4q/ZGBtAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFe8f3y094+P2V8GQCZvs78AgGG+Cr8fb3YfsD2LEFjTmZs/MQhszAIE1nL1Y18hCGzK8gPWcPdn/sQgsBlLD6iv5y99iEFgE5YdUNeo3/gVgsAGLDqgnqg/9yIGgYVZcEAds/7WnxgEFmSxATVk+GPPYhBYiIUG5JYh/j4TgsAiLDMgp2zxdyQGgeIsMSCX7PF3JAaBoiwvII9qAfiZGASKsbSA+SrH32dCECjEwgLmWSX+jsQgUIBFBcyxagB+JgaBxCwoINYO8XckBoGELCYgxo7x95kQBJKxlICxdo+/IzEIJGEZAeMIwK+JQWAySwjoT/ydIwSBiSwgoB/x9xoxCExg8QD3ib8+xCAQyMIB7hGA/YlBIIBFA7xG/I0lBIHBLBngOgEYRwwCg1guwOvEYBwxCHRmqQD3CMFYYhDoxDIB+hCDcYQg0IFFAvQlBuOIQeAGCwToTwjGEoPACywOYBwxGEsMAhdYGMB4YjCOEAROsiyAOGIwjhgEvmFJALGEYCwxCHzBcgDmEINxhCDwgMUAzCUG44hB4BMLAchBDMYRg0ATgUAmQjCWGIStWQBAPmIwjhCEbRl+IC8xGEcMwnYMPZCbEIwlBmEbhh2oQQzGEoOwPEMO1CIG4whBWJoBB2oSg3HEICzJYAN1CcFYYhCWYqCB+sRgHCEIyzDMwDrEYBwxCOUZYmA9YjCOGISyDC+wJiEYSwxCOYYWWJsYjCMEoRQDC+xBDMYRg1CCQQX2IgbjiEFIzYAC+xGCscQgpGQwgX2JwThCENIxlABiMI4YhDQMI0BrQjCaGITpDCHAZ2IwlhiEaQwfwCNiMI4QhCkMHsAzYjCOGIRQBg7gO0IwlhiEEAYN4CwxGEcIwnCGDOAqMRhHDMIw/8z+AqAcAcCPtzdxMpDXF0IYMrjqVwQ6pGjNPwp6+TxPn19TcwbDGC646njoO6RoTQy+4jg7j15D8wXDGC646qvD3mFFa2LwO1/NibmCcIYLrnp2yDuw+EUM/vTdTHz3OpkpGMZwwVVnDncHF63tG4Jnnv+zr41ZgmEMF1x15WB3gNHaHjF45Vk3Q5CC4YKrXjnQHWS0tl4MXn2uzQ6kYrjgqlcPcocZrdUOwVef4Tvfs7mBYQwXXHX3EHeo0VqdGLzzvPb4Hs0LDGO44Kpeh7fDjdZyxmCPZ9OcQHqGC67qfWg75Ghtbgz2fAbNB5RhuOCqEYe1g47WYkOw9zM36ms3GzCM4YKrRh7UDjxaqxVUo8PVTMAwhguuiritcfDRWv5frDALUJrhgqsqf2RHTdn+uLIZgCUYLrgq+gf4HYK0luP/rJ7xyyuefxjGcMFVs36L02FIa7+fv8jnYZXfXAb+YLjgqtl/182hSCTPOyzrn9lfAHDR7EOZPbx/fHjWYG3/zv4CgBfM+EiQPQg/2IabQKjMbQ09eZZgK24CYQVuBrlD/MGW3ATCShzmXOEmGbbmJhBW41aQ7wg/oLkJhHW55eERzwTwHzeBsDo3g7Qm/oC/uAmEXYiAfXnvgQfcBMJO3AruRfwBT4hA2JEYXJv4A04QgbAzMbgW8Qdc4GcCAfGwAu8hcJGbQOAnt4I1iT/gRSIQ+JMYrEH8ATf5OBh4TGTk5I+AA52IQOBrgiMX7wXQkY+Dge/5iHgu8QcMIAKB88RgLPEHDOTjYOA6cTKe1xgYzE0g8Bq3gmOIPyCICATuEYN9iD8gmAgE+hCDrxF/wCR+JhDoS9Sc57UCJnITCPTnVvA58QckIAKBccTgn8QfkIgIBMbbPQbFH5CQnwkE4uwYQzt+z0AJbgKBWLvcCoo/IDkRCMyxagyKP6AIHwcDc60UTSt9L8Dy3AQC81W/FRR/QEEiEMijWgyKP6AwHwcD+bx/fJQIrB9vb2WCFeBABAJ5VQjB1sQgUJIIBHKrcivYWp2PsQGaCASqqBKDbgWBIkQgUIsYBOhCBAI1VQjB1sQgkJYIBOqqcivYmp8XBNIRgUB9VWLQrSCQiAgE1lEhBFsTg0AKlhC8okps7KxKZHmWvlblPYSiDBjc4QDPr0pIeJZ+q/KeQXEGDXpwgOdXJSx2fpaqvEewCAMHvex8eFdRKTJ2e54qvTewCEMHve12eFdUJTh2eJaqvBewIMMHo+xwgFdXJUBWfJaqvPawMEMII614eK+oSpCs8jxVeb1hcQYRIqxyeK+sUphUfZ4qvcawAQMJkaoe3jupEiqVnqUqrylsxmDCDJUO8F1VCZfMz1KV1xA2ZUBhlsyHN79VCZlsz1OV1w02ZkhhtmyHN3+rEjQZnqUqrxUgAiGNDAc4z1UJnBnPUpXXBvg/QwvZiMH8qgRPxLNU5bUA/mJ4ISMhmF+l+Bn1PFV6DYC/GGDITAzmVyWEej5LVb5n4CmDDBWIwfyqhNGdZ6nK9wicYqChCiFYQ5VQuvI8VfmegEsMNlQjBvOrFE3fPU+VvhfgEsMNVYnB/KoE1KNnqcrXDrzMkEN1YjC/KkH1/vFR5msFbjPssAIhWIPAAhKxkGAlYjA/IQgkYRnBisRgfmIQmMwSgpWJwfzEIDCJ5QOrE4I1iEEgmKUDuxCD+QlBIJCFA7sRg/mJQSCARQO7EoP5iUFgoH9mfwHAJAIjP6EODOQQAMRGBaId6MxSAX4Tg/mJQaATywT4kxCsQQwCN1kiwGNiMD8hCNxggQDPicH8xCDwAosDOEcM5icGgQssDOA8IViDGAROsCiA68RgfkIQ+IYlAbxODOYnBoEvWA7AfWIwPzEIHPhv44D7BEZ+Qh04sLiBvsRGfqIdaCIQGEUM5icGYWsWADCWGMxPDMKW/EwgMJbAyE+ow5YsZyCO2MhPtMM2DDsQTwzmJwZheYYcmEMI1iAGYVmGG5hLDOYnBGFJBhvIQQzmJwZhKQYayEUM5icGYQkGGchHCNYgBqE0AwzkJQbzE4JQluEF8hOD+YlBKMfQAnWIwfzEIJThv40D6hAY+Ql1KMNCBWoSG/mJdkjNgAK1icH8xCCkZDCBNYjB/MQgpOJnAoE1CIz8hDqkYmkC6xEb+Yl2mM4QAusSg/mJQZjG8AFrE4I1iEEIZ+iAPYjB/IQghDJwwF7EYH5iEEIYNGBPYjA/MQhD+RMxwJ4ERn5CHYYSgcC+fry9iUFgVyIQQAwCGxKBAL+IQWAjIhDgSAgCGxCBAI+4FQQWJwIBnhGDwKJEIMAZQhBYjAgEOMutILAQEQhwlRgEFiACAV4lBoHCRCBc5b+y4kgIAgWJQHjF+8eHGOQPbgWBYkQg3CEGORKDQBEiEHoQgxyJQSA5EQg9CUGOhCCQlAiE3twKcuRWEEhIBMIoYpAjMQgkIgJhNCHIkRgEEhCBEMGtII8IQWAiEQiRxCBHbgWBSUQgzCAGORKDQDARCDMJQY6EIBBEBMJsbgU5cisIBBCBkIUY5EgMAgOJQMhGDHIkBoEBRCBkJQQ5EoJARyIQMnMryJFbQaATEQgViEGOxCBwkwiESsQgR2IQeJEIhIqEIEdCELhIBEJVbgU5cisIXCACoToxyJEYBE4QgbAKIciRGASeEIGwEreCPCIEgQdEIKxIDHLkVhA4EIGwMjHIZ54F4BMRCDtw+O/NPwaAB/6d/QUAQX5FgI8E9yH8gCfcBMJu3ArtwXsMfMNNIOzKzeCaxB9wkptA2J1oWIMbXuAiEQgIiOq8d8ALfBwM/OYj4lrEH3CDCAT+JgZzE39ABz4OBr4mNnLxsT3QkQgEnhMeOXgPgM58HAyc4yPiOcQfMIibQOAaURLDDSwwmJtA4Dq3guMIPyCIm0DgdW6r+vJaAoHcBAL3uRm8R/wBE7gJBPoRM9e4SQUmchMI9OVW8HvCD0jATSAwhluux7wmQBJuAoGx3Az+JP6AZNwEAjF2jSA3okBSIhCIs1sQ7fS9AuX4OBiIt/pHxOIPKMBNIDDParG0200nUJqbQGCuFW4FhR9QkJtAIIeqt2gVv2aA5iYQyKbKzaD4A4pzEwjklDWyqt5YAhzk/pc2ZCUCYmW4FfSex8vwvsPCDBjcIQxizYoC73M8AQjDGTK4SyDEiwoE72088QdhDBv0IhhijYwF72U88QfhDB30JiBi9Y4H718s8QfTGD4YRUzEuhsT3q94AhCmMoAwkrCIdzUsvEfxxB+kYBAhgtCIdSYyvCfxxB+kYiAhkvCI9VV0eB/iCUBIx1DCDCIk1q8A8brHE3+QluGEWQQJKxN/kJ4hhdnEICsRf1CGYYUsxCDVCUAoxcBCJkKQisQflGRwISMxSAXiD0ozwJCZGCQj8QdLMMhQgRgkCwEIyzDMUIUQZCbxB8sx1FCNGCSS+INlGW6oSgwykviD5RlyqE4M0psAhC0YdFiBEKQH8QdbMfCwEjHIK8QfbMngw4rEIGcJQNiW4YeViUG+Iv5ge5YArE4I8pn4A/5jGcAuxODexB9wYCnAbsTgfgQg8IDFADsSgnsQf8ATFgTsTAyuSfwBJ1gUgBhchfgDLrAwgN/EYF0CELjI0gD+JARrEX/AiywP4DExmJv4A26yRIDnxGAu4g/oxDIBzhGD8wlAoCMLBThPCM4h/oABLBbgOjEYQ/wBA1kwwOvE4DgCEBjMkgHuEYJ9iT8giGUD9CEG7xF/QDBLB+hLDF4j/oBJLB9gDDH4PQEITGQBAeMIwcfEH5CARQSMJwZ/En9AIhYSEGfXGBR/QEIWExBvpxgUgEBSlhMwx+ohKP6A5CwpYK7VYlD8AUVYVkAOK8SgAAQKsbCAXCrGoPgDCrK4gHyqhKD4AwqzwIC8ssag+AMWYJEB+WWKQQEILMIyA2qYHYLiD1iMpQbUEh2D4g9YlOUG1DQ6BsUfsDhLDqhtRAwKQGADFh1QX68QFH/ARiw8YB2vxqD4AzZk8QHrORuD4g/YmAUIrOtZDApAYHOWILC2YwiKPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOCi/wEu853sfIEsNQAAAABJRU5ErkJggg==" class="nlogo" alt="Selux" onclick="sp('home')"/>
+  <ul class="nl" id="nl">
+    <li><a onclick="sp('home')" id="n-home" class="act">Home</a></li>
+    <li><a onclick="sp('courses')" id="n-courses">Courses</a></li>
+    <li><a onclick="sp('research')" id="n-research">Research</a></li>
+    <li><a onclick="sp('blog')" id="n-blog">Blog</a></li>
+    <li><a onclick="sp('about')" id="n-about">About</a></li>
+    <li><a onclick="sp('contact')" id="n-contact">Contact</a></li>
+    <li><a onclick="sp('login')" id="n-login">Login</a></li>
+    <li><a onclick="sp('signup')" id="n-signup" class="ncta">Join Us</a></li>
+  </ul>
+  <div class="ham" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- ████ HOME ████ -->
+<div class="pg act" id="pg-home">
+  <section class="hero">
+    <div class="orb"></div>
+    <div class="hc">
+      <div class="htag">Online Learning · AI Research · Robotics Community</div>
+      <h1>Selux<br><span>Innovation</span></h1>
+      <p class="hsub">The home of the next generation of AI researchers, robotics engineers, and machine learning pioneers. Learn, research, build, and connect with people changing the world.</p>
+      <div class="hbtns">
+        <a class="bp" onclick="sp('signup')">Join the Community</a>
+        <a class="bs" onclick="sp('courses')">Explore Courses</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stn rv"><div class="snum">6+</div><div class="slbl">Core Courses</div></div>
+    <div class="stn rv"><div class="snum">AI</div><div class="slbl">Research Hub</div></div>
+    <div class="stn rv"><div class="snum">100%</div><div class="slbl">Free to Join</div></div>
+    <div class="stn rv"><div class="snum">∞</div><div class="slbl">Possibilities</div></div>
+  </div>
+
+  <section class="sec">
+    <div class="stag rv">Everything You Need</div>
+    <h2 class="sti rv">Three Pillars of <span>Selux</span></h2>
+    <p class="sd rv">We are more than a website. We are a movement — an online learning platform, an AI research company, and a robotics community all in one.</p>
+    <div class="cg">
+      <div class="card rv"><div class="cico">🎓</div><div class="ctit">Online Learning</div><div class="cdsc">Structured courses from beginner to advanced covering AI, robotics, Python, data science and more. Learn at your own pace.</div></div>
+      <div class="card rv"><div class="cico">🔬</div><div class="ctit">AI Research</div><div class="cdsc">Explore cutting-edge AI research. Read papers, contribute ideas, and stay at the frontier of what machines can do.</div></div>
+      <div class="card rv"><div class="cico">🤝</div><div class="ctit">Robotics Community</div><div class="cdsc">Connect with fellow engineers and builders from around the world. Share projects, ask questions, and grow together.</div></div>
+      <div class="card rv"><div class="cico">🤖</div><div class="ctit">AI & Machine Learning</div><div class="cdsc">Understand neural networks, deep learning and real-world AI applications that power modern robots.</div></div>
+      <div class="card rv"><div class="cico">🐍</div><div class="ctit">Python Programming</div><div class="cdsc">Python is the language of AI. We teach it from scratch with projects that actually matter in the real world.</div></div>
+      <div class="card rv"><div class="cico">💬</div><div class="ctit">AI Chatbot Innovation</div><div class="cdsc">Build your own AI chatbots and assistants using the latest large language models and APIs.</div></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="stag rv">Get Started Today</div>
+    <h2 class="rv">Ready to Shape the <span style="background:linear-gradient(135deg,#00aaff,#00e5ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Future?</span></h2>
+    <p class="rv">Join Selux Innovation — the community where the next generation of AI and robotics pioneers are being built.</p>
+    <a class="bp rv" onclick="sp('signup')">Create Your Free Account</a>
+  </section>
+</div>
+
+<!-- ████ COURSES ████ -->
+<div class="pg" id="pg-courses">
+  <section class="sec">
+    <div class="stag rv">Learn</div>
+    <h2 class="sti rv">Our <span>Courses</span></h2>
+    <p class="sd rv">Structured learning paths for the next generation of AI and robotics engineers. Start anywhere — all you need is curiosity.</p>
+    <div class="ccg">
+      <div class="cc rv"><div class="cch"><div class="cico">🤖</div><div class="cclv">Beginner</div><div class="cct">Intro to Artificial Intelligence</div><div class="ccd">Start your AI journey from zero. No experience needed.</div></div><div class="ccb"><ul class="ccl"><li>What is AI and how does it work?</li><li>Types of machine learning</li><li>Real-world AI applications</li><li>Your first AI project</li></ul><button class="ccbtn" onclick="sp('signup')">Enrol Now</button></div></div>
+      <div class="cc rv"><div class="cch"><div class="cico">🔧</div><div class="cclv">Beginner</div><div class="cct">Robotics Fundamentals</div><div class="ccd">Learn the building blocks of modern robotics engineering.</div></div><div class="ccb"><ul class="ccl"><li>Robot components and sensors</li><li>Movement and control systems</li><li>Programming robots with Python</li><li>Build your first robot simulation</li></ul><button class="ccbtn" onclick="sp('signup')">Enrol Now</button></div></div>
+      <div class="cc rv"><div class="cch"><div class="cico">🐍</div><div class="cclv">Beginner</div><div class="cct">Python for AI & Robotics</div><div class="ccd">Master Python — the most important language in AI.</div></div><div class="ccb"><ul class="ccl"><li>Python fundamentals from scratch</li><li>Functions, loops and data structures</li><li>Libraries: NumPy, Pandas, Matplotlib</li><li>Your first AI script</li></ul><button class="ccbtn" onclick="sp('signup')">Enrol Now</button></div></div>
+      <div class="cc rv"><div class="cch"><div class="cico">📊</div><div class="cclv">Intermediate</div><div class="cct">Data Science for Robotics</div><div class="ccd">Use data to make your robots smarter and more accurate.</div></div><div class="ccb"><ul class="ccl"><li>Collecting and cleaning data</li><li>Training models on robot data</li><li>Computer vision basics</li><li>Real-time data processing</li></ul><button class="ccbtn" onclick="sp('signup')">Enrol Now</button></div></div>
+      <div class="cc rv"><div class="cch"><div class="cico">⚙️</div><div class="cclv">Intermediate</div><div class="cct">Algorithms & Logic</div><div class="ccd">Master the mathematics and logic that power intelligent machines.</div></div><div class="ccb"><ul class="ccl"><li>Search and pathfinding algorithms</li><li>Decision trees and logic</li><li>Optimization techniques</li><li>Algorithm design in Python</li></ul><button class="ccbtn" onclick="sp('signup')">Enrol Now</button></div></div>
+      <div class="cc rv"><div class="cch"><div class="cico">💬</div><div class="cclv">Advanced</div><div class="cct">Build Your Own AI Chatbot</div><div class="ccd">Create a fully working AI assistant from scratch using Python.</div></div><div class="ccb"><ul class="ccl"><li>How large language models work</li><li>Connecting to AI APIs</li><li>Building a chatbot interface</li><li>Deploy your chatbot live</li></ul><button class="ccbtn" onclick="sp('signup')">Enrol Now</button></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- ████ RESEARCH ████ -->
+<div class="pg" id="pg-research">
+  <section class="sec">
+    <div class="stag rv">Explore</div>
+    <h2 class="sti rv">AI <span>Research Hub</span></h2>
+    <p class="sd rv">Stay at the frontier of artificial intelligence. Explore key research areas, read about breakthroughs, and contribute your own ideas to the community.</p>
+    <div class="cg">
+      <div class="card rv"><div class="cico">🧠</div><div class="ctit">Neural Networks</div><div class="cdsc">Deep dive into how artificial neural networks are designed, trained and deployed in real-world systems.</div></div>
+      <div class="card rv"><div class="cico">👁️</div><div class="ctit">Computer Vision</div><div class="cdsc">How machines see and interpret images and video — powering everything from self-driving cars to medical imaging.</div></div>
+      <div class="card rv"><div class="cico">🗣️</div><div class="ctit">Natural Language Processing</div><div class="cdsc">The science behind AI that reads, writes and understands human language — including ChatGPT and Claude.</div></div>
+      <div class="card rv"><div class="cico">🦾</div><div class="ctit">Humanoid Robotics</div><div class="cdsc">The race to build robots that walk, talk and work like humans — from Tesla Optimus to Boston Dynamics Atlas.</div></div>
+      <div class="card rv"><div class="cico">🚗</div><div class="ctit">Autonomous Systems</div><div class="cdsc">Self-driving cars, autonomous drones and robotic surgery — how AI makes machines act without human control.</div></div>
+      <div class="card rv"><div class="cico">⚡</div><div class="ctit">Reinforcement Learning</div><div class="cdsc">How AI learns by trial and error — the technology behind AlphaGo, robotics control and game-playing AIs.</div></div>
+    </div>
+    <div class="nl2 rv">
+      <h3>Join the Research Community</h3>
+      <p>Sign up to get early access to research articles, community discussions and project collaborations.</p>
+      <div class="nlf">
+        <input type="email" id="resEmail" placeholder="your@email.com"/>
+        <button onclick="subRes()">Get Access</button>
+      </div>
+      <div id="resMsg" style="margin-top:0.9rem;font-size:0.82rem;color:var(--ok);display:none;">✅ You're in! Welcome to the research community.</div>
+    </div>
+  </section>
+</div>
+
+<!-- ████ BLOG ████ -->
+<div class="pg" id="pg-blog">
+  <section class="sec">
+    <div class="stag rv">Read</div>
+    <h2 class="sti rv">Latest from <span>Selux</span></h2>
+    <p class="sd rv">Articles, insights and discoveries from the world of AI, robotics and machine learning — written for the next generation.</p>
+    <div class="bcg">
+      <div class="bc rv"><div class="bi">🤖</div><div class="bb"><span class="bt2">Artificial Intelligence</span><div class="bti">How Neural Networks Actually Learn</div><p class="bex">Ever wondered what happens inside an AI when it trains? We break it down simply so anyone can understand.</p><div class="bm">Selux Team · 5 min read</div></div></div>
+      <div class="bc rv"><div class="bi">🦾</div><div class="bb"><span class="bt2">Robotics</span><div class="bti">The Rise of Humanoid Robots in 2025</div><p class="bex">Tesla and Boston Dynamics are racing to build humanoid robots. Here's what that means for the future.</p><div class="bm">Selux Team · 7 min read</div></div></div>
+      <div class="bc rv"><div class="bi">🐍</div><div class="bb"><span class="bt2">Python</span><div class="bti">Why Python is the Language of AI</div><p class="bex">From TensorFlow to PyTorch, Python dominates the AI world. Here's why and how to get started today.</p><div class="bm">Selux Team · 4 min read</div></div></div>
+      <div class="bc rv"><div class="bi">🚀</div><div class="bb"><span class="bt2">Career</span><div class="bti">How to Become an AI Engineer at 16</div><p class="bex">You don't need a degree to start. A practical roadmap for young people who want a career in AI and robotics.</p><div class="bm">Selux Team · 6 min read</div></div></div>
+      <div class="bc rv"><div class="bi">🧠</div><div class="bb"><span class="bt2">Machine Learning</span><div class="bti">Supervised vs Unsupervised Learning Explained</div><p class="bex">Two of the most important ML concepts explained with real-world examples you'll actually remember.</p><div class="bm">Selux Team · 5 min read</div></div></div>
+      <div class="bc rv"><div class="bi">🌍</div><div class="bb"><span class="bt2">Community</span><div class="bti">Why We Built Selux Innovation</div><p class="bex">The story behind Selux — a young founder's mission to make world-class AI education accessible to everyone.</p><div class="bm">Samuel · 3 min read</div></div></div>
+    </div>
+    <div class="nl2 rv">
+      <h3>Get Articles in Your Inbox</h3>
+      <p>Subscribe to our newsletter and never miss a new article, course update or community announcement.</p>
+      <div class="nlf">
+        <input type="email" id="blogEmail" placeholder="your@email.com"/>
+        <button onclick="subBlog()">Subscribe</button>
+      </div>
+      <div id="blogMsg" style="margin-top:0.9rem;font-size:0.82rem;color:var(--ok);display:none;">✅ Subscribed! Welcome to Selux Innovation.</div>
+    </div>
+  </section>
+</div>
+
+<!-- ████ ABOUT ████ -->
+<div class="pg" id="pg-about">
+  <section class="sec">
+    <div class="ag">
+      <div>
+        <div class="stag rv">Our Story</div>
+        <h2 class="sti rv">Built by a <span>Young Innovator</span></h2>
+        <p class="sd rv">Selux Innovation was founded with one mission — to make world-class AI and robotics education accessible to everyone, everywhere. We are an online learning platform, an AI research company, and a robotics community all in one.</p>
+        <p class="sd rv" style="margin-top:-1.2rem;">We believe the next generation of AI engineers and robotics pioneers are out there right now. We're here to equip them — starting with you.</p>
+        <a class="bp rv" onclick="sp('signup')">Join the Community</a>
+      </div>
+      <div class="av rv">
+        <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="90" cy="90" r="80" stroke="rgba(0,229,255,0.2)" stroke-width="1" stroke-dasharray="8 4"/>
+          <circle cx="90" cy="90" r="60" stroke="rgba(0,170,255,0.3)" stroke-width="1"/>
+          <circle cx="90" cy="90" r="40" stroke="rgba(0,229,255,0.4)" stroke-width="1" stroke-dasharray="4 4"/>
+          <circle cx="90" cy="90" r="22" fill="rgba(0,170,255,0.1)" stroke="rgba(0,229,255,0.6)" stroke-width="1.5"/>
+          <text x="90" y="99" text-anchor="middle" font-family="Orbitron,monospace" font-size="28" font-weight="900" fill="#00e5ff">S</text>
+          <circle cx="90" cy="10" r="3" fill="#00e5ff" opacity="0.8"/>
+          <circle cx="90" cy="170" r="3" fill="#00e5ff" opacity="0.8"/>
+          <circle cx="10" cy="90" r="3" fill="#00aaff" opacity="0.6"/>
+          <circle cx="170" cy="90" r="3" fill="#00aaff" opacity="0.6"/>
+          <line x1="90" y1="68" x2="90" y2="10" stroke="rgba(0,229,255,0.2)" stroke-width="1"/>
+          <line x1="90" y1="112" x2="90" y2="170" stroke="rgba(0,229,255,0.2)" stroke-width="1"/>
+          <line x1="68" y1="90" x2="10" y2="90" stroke="rgba(0,170,255,0.15)" stroke-width="1"/>
+          <line x1="112" y1="90" x2="170" y2="90" stroke="rgba(0,170,255,0.15)" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+    <div style="margin-top:4rem;">
+      <div class="stag rv">Our Values</div>
+      <h2 class="sti rv">What We <span>Stand For</span></h2>
+      <div class="cg" style="margin-top:1.5rem;">
+        <div class="card rv"><div class="cico">🎯</div><div class="ctit">Accessibility</div><div class="cdsc">World-class AI education should be available to everyone — not just those who can afford top universities.</div></div>
+        <div class="card rv"><div class="cico">🔬</div><div class="ctit">Innovation</div><div class="cdsc">We push boundaries constantly and encourage our community to experiment, fail, learn and build things never seen before.</div></div>
+        <div class="card rv"><div class="cico">🌍</div><div class="ctit">Community</div><div class="cdsc">No one builds the future alone. Selux is a place where engineers support, inspire and challenge each other every day.</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ████ CONTACT ████ -->
+<div class="pg" id="pg-contact">
+  <section class="sec">
+    <div class="stag rv">Get In Touch</div>
+    <h2 class="sti rv">Contact <span>Selux</span></h2>
+    <p class="sd rv">Have a question, idea or just want to say hello? We'd love to hear from you.</p>
+    <div class="contg">
+      <div>
+        <div class="ci rv"><div class="cion">🌐</div><div><div class="clbl">Website</div><div class="cval">seluxinnovation.com</div></div></div>
+        <div class="ci rv"><div class="cion">📧</div><div><div class="clbl">Email</div><div class="cval">hello@seluxinnovation.com</div></div></div>
+        <div class="ci rv"><div class="cion">🤖</div><div><div class="clbl">Focus</div><div class="cval">AI, Robotics & Machine Learning</div></div></div>
+        <div class="ci rv"><div class="cion">📍</div><div><div class="clbl">Based</div><div class="cval">United Kingdom 🇬🇧</div></div></div>
+        <div class="fb rv" style="margin-top:0.5rem;">
+          <div class="ctit" style="margin-bottom:0.7rem;">Newsletter</div>
+          <p style="font-size:0.82rem;color:var(--gr);margin-bottom:1rem;">Stay updated with our latest courses, articles and news.</p>
+          <div class="fg"><input type="email" id="cntEmail" placeholder="your@email.com"/></div>
+          <button class="fsb" onclick="subCnt()">Subscribe to Newsletter</button>
+          <div id="cntMsg" style="margin-top:0.6rem;font-size:0.8rem;color:var(--ok);display:none;">✅ Subscribed!</div>
+        </div>
+      </div>
+      <div class="fb rv">
+        <div class="fti">Send a Message</div>
+        <div class="fsu">Fill in the form below and we'll get back to you as soon as possible.</div>
+        <div id="cntAl"></div>
+        <div class="fr">
+          <div class="fg"><label>First Name</label><input type="text" id="cntF" placeholder="Samuel"/></div>
+          <div class="fg"><label>Last Name</label><input type="text" id="cntL" placeholder="Smith"/></div>
+        </div>
+        <div class="fg"><label>Email</label><input type="email" id="cntE" placeholder="you@email.com"/></div>
+        <div class="fg"><label>Subject</label><select id="cntS"><option value="">Select a topic...</option><option>General Enquiry</option><option>Course Question</option><option>Research Collaboration</option><option>Partnership</option><option>Other</option></select></div>
+        <div class="fg"><label>Message</label><textarea id="cntM" placeholder="Write your message here..."></textarea></div>
+        <button class="fsb" onclick="sendMsg()">Send Message</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ████ SIGN UP ████ -->
+<div class="pg" id="pg-signup">
+  <div class="apg">
+    <div class="abx">
+      <div class="alo">
+        <img src="data:image/png;base64,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" class="ali" alt="Selux"/>
+        <div class="alb">SELUX INNOVATION</div>
+      </div>
+      <div class="fb">
+        <div class="fti">Create Your Account</div>
+        <div class="fsu">Join the Selux community — online learning, AI research and robotics all in one place. Free forever.</div>
+        <div id="suAl"></div>
+        <div class="fr">
+          <div class="fg"><label>First Name</label><input type="text" id="suFN" placeholder="Samuel"/></div>
+          <div class="fg"><label>Last Name</label><input type="text" id="suLN" placeholder="Smith"/></div>
+        </div>
+        <div class="fg"><label>Email Address</label><input type="email" id="suEM" placeholder="you@email.com"/></div>
+        <div class="fg"><label>Password</label><input type="password" id="suPW" placeholder="Create a strong password"/></div>
+        <div class="fg"><label>Confirm Password</label><input type="password" id="suPW2" placeholder="Repeat your password"/></div>
+        <div class="fg"><label>I am interested in</label><select id="suIN"><option value="">Select your interest...</option><option>Robotics Engineering</option><option>Artificial Intelligence</option><option>Machine Learning</option><option>Python Programming</option><option>AI Research</option><option>All of the above</option></select></div>
+        <div style="display:flex;align-items:flex-start;gap:0.7rem;margin-bottom:1.1rem;">
+          <input type="checkbox" id="suNL" style="width:auto;margin-top:3px;accent-color:var(--cy);"/>
+          <label for="suNL" style="font-size:0.8rem;color:var(--gr);text-transform:none;letter-spacing:0;cursor:pointer;">Subscribe to the Selux newsletter for updates, articles and research news</label>
+        </div>
+        <button class="fsb" onclick="doSignup()">Create Free Account</button>
+        <div class="fln">Already have an account? <a onclick="sp('login')">Sign in here</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ████ LOGIN ████ -->
+<div class="pg" id="pg-login">
+  <div class="apg">
+    <div class="abx">
+      <div class="alo">
+        <img src="data:image/png;base64,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" class="ali" alt="Selux"/>
+        <div class="alb">SELUX INNOVATION</div>
+      </div>
+      <div class="fb">
+        <div class="fti">Welcome Back</div>
+        <div class="fsu">Sign in to your Selux account to continue your learning and research journey.</div>
+        <div id="lgAl"></div>
+        <div class="fg"><label>Email Address</label><input type="email" id="lgEM" placeholder="you@email.com"/></div>
+        <div class="fg"><label>Password</label><input type="password" id="lgPW" placeholder="Your password"/></div>
+        <div style="text-align:right;margin-top:-0.4rem;margin-bottom:1.1rem;"><a style="font-size:0.78rem;color:var(--cy);text-decoration:none;cursor:pointer;">Forgot password?</a></div>
+        <button class="fsb" onclick="doLogin()">Sign In</button>
+        <div class="fln">Don't have an account? <a onclick="sp('signup')">Create one free</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fg2">
+    <div>
+      <div class="fb2">SELUX INNOVATION</div>
+      <p class="fd">Online learning platform · AI research company · Robotics community. Building the next generation of engineers and innovators.</p>
+    </div>
+    <div>
+      <div class="fh">Explore</div>
+      <ul class="fls">
+        <li><a onclick="sp('home')">Home</a></li>
+        <li><a onclick="sp('courses')">Courses</a></li>
+        <li><a onclick="sp('research')">Research</a></li>
+        <li><a onclick="sp('blog')">Blog</a></li>
+        <li><a onclick="sp('about')">About</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fh">Community</div>
+      <ul class="fls">
+        <li><a onclick="sp('signup')">Join Us Free</a></li>
+        <li><a onclick="sp('login')">Sign In</a></li>
+        <li><a onclick="sp('contact')">Contact</a></li>
+        <li><a href="https://www.seluxinnovation.com" target="_blank">Website</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbt">© 2025 Selux Innovation · AI Research · Online Learning · Robotics Community</div>
+</footer>
+
+<script>
+function sp(name) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('act'));
+  document.querySelectorAll('.nl a').forEach(a => a.classList.remove('act'));
+  const pg = document.getElementById('pg-' + name);
+  if (pg) pg.classList.add('act');
+  const nav = document.getElementById('n-' + name);
+  if (nav) nav.classList.add('act');
+  window.scrollTo(0, 0);
+  document.getElementById('nl').classList.remove('open');
+  setTimeout(trigReveal, 80);
+}
+function toggleMenu() { document.getElementById('nl').classList.toggle('open'); }
+function trigReveal() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.rv:not(.vis)').forEach(el => obs.observe(el));
+}
+document.addEventListener('DOMContentLoaded', trigReveal);
+function subRes() {
+  const e = document.getElementById('resEmail').value;
+  if (e && e.includes('@')) { document.getElementById('resMsg').style.display='block'; document.getElementById('resEmail').value=''; }
+}
+function subBlog() {
+  const e = document.getElementById('blogEmail').value;
+  if (e && e.includes('@')) { document.getElementById('blogMsg').style.display='block'; document.getElementById('blogEmail').value=''; }
+}
+function subCnt() {
+  const e = document.getElementById('cntEmail').value;
+  if (e && e.includes('@')) { document.getElementById('cntMsg').style.display='block'; document.getElementById('cntEmail').value=''; }
+}
+function sendMsg() {
+  const f=document.getElementById('cntF').value, e=document.getElementById('cntE').value, m=document.getElementById('cntM').value, al=document.getElementById('cntAl');
+  if (!f||!e||!m) { al.className='al err'; al.textContent='⚠️ Please fill in all required fields.'; return; }
+  if (!e.includes('@')) { al.className='al err'; al.textContent='⚠️ Please enter a valid email address.'; return; }
+  al.className='al ok'; al.textContent='✅ Message sent! We will get back to you soon.';
+  document.getElementById('cntF').value=''; document.getElementById('cntE').value=''; document.getElementById('cntM').value='';
+}
+function doSignup() {
+  const fn=document.getElementById('suFN').value, em=document.getElementById('suEM').value,
+        pw=document.getElementById('suPW').value, pw2=document.getElementById('suPW2').value, al=document.getElementById('suAl');
+  if (!fn||!em||!pw||!pw2) { al.className='al err'; al.textContent='⚠️ Please fill in all fields.'; return; }
+  if (pw!==pw2) { al.className='al err'; al.textContent='⚠️ Passwords do not match.'; return; }
+  if (pw.length<6) { al.className='al err'; al.textContent='⚠️ Password must be at least 6 characters.'; return; }
+  al.className='al ok'; al.textContent='🎉 Welcome to Selux Innovation! Your account has been created.';
+}
+function doLogin() {
+  const em=document.getElementById('lgEM').value, pw=document.getElementById('lgPW').value, al=document.getElementById('lgAl');
+  if (!em||!pw) { al.className='al err'; al.textContent='⚠️ Please enter your email and password.'; return; }
+  al.className='al ok'; al.textContent='✅ Welcome back! Signing you in...';
+  setTimeout(()=>sp('home'), 1500);
+}
+</script>
+</body>
+</html>
